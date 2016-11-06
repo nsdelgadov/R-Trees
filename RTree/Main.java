@@ -4,17 +4,13 @@ import java.awt.Point;
 import java.util.*;
 import java.util.Collections;
 
-class Main{
+public class Main{
     public static void main(String[] args) throws IOException{
-        
         System.out.println("hellos worlds");
-        
         //tests_areas();
         //tests_interseccion();
-        tests_buscar();
-        
-        
-        //tests_insetar();
+        //tests_buscar();
+        tests_insertar();
     }
     
     public static void tests_areas(){
@@ -50,19 +46,39 @@ class Main{
         RTree r9ok = new RTree(new Point(5,5), 5, 5, 2, 5, true);
         RTree r10ok = new RTree(new Point(5,5), 5, 5, 2, 5, true);
         
-        RTree[] rsok = {r2ok, r3ok, r4ok, r5ok, r6ok, r7ok, r8ok, r9ok, r10ok};
-        RTree[] rsnuevos = {r2nuevo, r3nuevo, r4nuevo, r5nuevo, r6nuevo, r7nuevo, r8nuevo, r9nuevo, r10nuevo};
+        List<RTree> rsok = new ArrayList<RTree>();
+        rsok.add(r2ok);
+        rsok.add(r3ok);
+        rsok.add(r4ok);
+        rsok.add(r5ok);
+        rsok.add(r6ok);
+        rsok.add(r7ok);
+        rsok.add(r8ok);
+        rsok.add(r9ok);
+        rsok.add(r10ok);
+        
+        List<RTree> rsnuevos = new ArrayList<RTree>();
+        rsok.add(r2nuevo);
+        rsok.add(r3nuevo);
+        rsok.add(r4nuevo);
+        rsok.add(r5nuevo);
+        rsok.add(r6nuevo);
+        rsok.add(r7nuevo);
+        rsok.add(r8nuevo);
+        rsok.add(r9nuevo);
+        rsok.add(r10nuevo);
+        
         for (int i = 0; i < 9; i++){
-            System.out.println("Test nuevoRectangulo "+i+" "+rsok[i].compareTo(rsnuevos[i]));
-            if(rsok[i].compareTo(rsnuevos[i])== false){
-                System.out.println("R ok"+rsok[i]);
-                System.out.println("R nuevo"+ rsnuevos[i]);
+            System.out.println("Test nuevoRectangulo "+i+" "+rsok.get(i).compareTo(rsnuevos.get(i)));
+            if(rsok.get(i).compareTo(rsnuevos.get(i))== false){
+                System.out.println("R ok"+rsok.get(i));
+                System.out.println("R nuevo"+ rsnuevos.get(i));
             }
         }
         
     }
     
-    public static void tests_insetar(){
+    public static void tests_insertar(){
         
         /*
         http://imgur.com/2iScsCU
@@ -74,7 +90,7 @@ class Main{
         RTree r4 = new RTree(new Point(1,0), 1, 1, 1, 2, true);
         RTree r1 = new RTree(2,r2,r3);
         
-        String overflow = r1.insertar(r4);
+        List<RTree> overflow = r1.insertar(r4);
         System.out.println("Test Overflow: "+overflow);
         
         
@@ -84,7 +100,7 @@ class Main{
         RTree r4In = new RTree(new Point(1,0), 1, 1, 1, 2, true);
         RTree r1In = new RTree(3,r2,r3);
         
-        String inserta = r1In.insertar(r4In);
+        List<RTree> inserta = r1In.insertar(r4In);
         System.out.println("Test inseta bien "+inserta);
         
         
@@ -105,8 +121,12 @@ class Main{
         RTree r6A = new RTree(new Point(1,1), 3, 3, 1, 3, false);
         RTree r7A = new RTree(new Point(7,1), 4, 3, 1, 3, false);
         
-        RTree[] hijos6A = {r2A, r3A, null};
-        RTree[] hijos7A = {r4A, r5A, null};
+        List<RTree> hijos6A = new ArrayList<RTree>();
+        hijos6A.add(r2A);
+        hijos6A.add(r3A);
+        List<RTree> hijos7A = new ArrayList<RTree>();
+        hijos6A.add(r4A);
+        hijos6A.add(r5A);
         
         r6A.setHijos(hijos6A, 2);
         r7A.setHijos(hijos7A, 2);
@@ -115,7 +135,7 @@ class Main{
         
         RTree r8A = new RTree(new Point(6,2), 2, 1, 1, 3, true);
         
-        String inserta1A = r1A.insertar(r8A);
+        List<RTree> inserta1A = r1A.insertar(r8A);
         System.out.println("Test de eleccion (1) "+inserta1A);
         
         /*
@@ -136,8 +156,12 @@ class Main{
         RTree r6B = new RTree(new Point(2,1), 3, 3, 1, 3, false);
         RTree r7B = new RTree(new Point(7,1), 4, 3, 1, 3, false);
         
-        RTree[] hijos6B = {r2B, r3B, null};
-        RTree[] hijos7B = {r4B, r5B, null};
+        List<RTree> hijos6B = new ArrayList<RTree>();
+        hijos6A.add(r2B);
+        hijos6A.add(r3B);
+        List<RTree> hijos7B = new ArrayList<RTree>();
+        hijos6A.add(r4B);
+        hijos6A.add(r5B);
         
         r6B.setHijos(hijos6B, 2);
         r7B.setHijos(hijos7B, 2);
@@ -152,7 +176,7 @@ class Main{
             System.out.println("fail en cantidad de hijos de 7B, deberían ser 2");
         }
         
-        String inserta1B = r1B.insertar(r8B);
+        List<RTree> inserta1B = r1B.insertar(r8B);
         
         if(r7B.getCantidadHijos() != 3){
             System.out.println("fail en cantidad de hijos de 7B, deberían ser 3");
@@ -161,7 +185,7 @@ class Main{
         System.out.println("Test inserta bien "+inserta1B);
         
         System.out.println("--------");
-        String inserta2B = r1B.insertar(r9B);
+        List<RTree> inserta2B = r1B.insertar(r9B);
         System.out.println("Test actualiza a menor crecimiento de area (1) "+inserta2B);
     
         /*
@@ -179,8 +203,12 @@ class Main{
         RTree r6C = new RTree(new Point(1,1), 2, 2, 1, 3, false);
         RTree r7C = new RTree(new Point(4,1), 2, 2, 1, 3, false);
         
-        RTree[] hijos6C = {r2C, r3C, null};
-        RTree[] hijos7C = {r4C, r5C, null};
+        List<RTree> hijos6C = new ArrayList<RTree>();
+        hijos6A.add(r2C);
+        hijos6A.add(r3C);
+        List<RTree> hijos7C = new ArrayList<RTree>();
+        hijos6A.add(r4C);
+        hijos6A.add(r5C);
         
         r6C.setHijos(hijos6C, 2);
         r7C.setHijos(hijos7C, 2);
@@ -189,7 +217,7 @@ class Main{
         
         RTree r8C = new RTree(new Point(3,2), 1, 1, 1, 3, true);
         
-        String inserta1C = r1C.insertar(r8C);
+        List<RTree> inserta1C = r1C.insertar(r8C);
         System.out.println("Test todo igual, aleatorio "+ inserta1C);
         
         
@@ -210,8 +238,12 @@ class Main{
         RTree r6D = new RTree(new Point(1,1), 2, 2, 1, 3, false);
         RTree r7D = new RTree(new Point(4,1), 2, 3, 1, 3, false);
         
-        RTree[] hijos6D = {r2D, r3D, null};
-        RTree[] hijos7D = {r4D, r5D, null};
+        List<RTree> hijos6D = new ArrayList<RTree>();
+        hijos6A.add(r2D);
+        hijos6A.add(r3D);
+        List<RTree> hijos7D = new ArrayList<RTree>();
+        hijos6A.add(r4D);
+        hijos6A.add(r5D);
         
         r6D.setHijos(hijos6D, 2);
         r7D.setHijos(hijos7D, 2);
@@ -220,7 +252,7 @@ class Main{
         
         RTree r8D = new RTree(new Point(3,2), 1, 1, 1, 3, true);
         
-        String inserta1D = r1D.insertar(r8D);
+        List<RTree> inserta1D = r1D.insertar(r8D);
         System.out.println("Test escoge menor area, (0) "+inserta1D);
         
     }
@@ -249,12 +281,28 @@ class Main{
         RTree r16 = new RTree(new Point(3,3), 1, 1, 1, 2, true);
         RTree r17 = new RTree(new Point(1,1), 3, 3, 1, 2, true);
         RTree r18 = new RTree(new Point(1,0), 5, 4, 1, 2, true);
+        List<RTree> rsTrue = new ArrayList<RTree>();
+        rsTrue.add(r2);
+        rsTrue.add(r3);
+        rsTrue.add(r4);
+        rsTrue.add(r5);
+        rsTrue.add(r6);
+        rsTrue.add(r7);
+        rsTrue.add(r8);
+        rsTrue.add(r9);
+        rsTrue.add(r10);
+        rsTrue.add(r11);
+        rsTrue.add(r12);
+        rsTrue.add(r13);
+        rsTrue.add(r14);
+        rsTrue.add(r15);
+        rsTrue.add(r16);
+        rsTrue.add(r17);
+        rsTrue.add(r18);
         
-        RTree[] rsTrue = {r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18};
-        
-        for (int i = 0; i < rsTrue.length; i++){
+        for (int i = 0; i < rsTrue.size(); i++){
             String test;
-            if(rsTrue[i].seIntersectaCon(r1)){
+            if(rsTrue.get(i).seIntersectaCon(r1)){
                 test = " ok";
             }else{
                 test = " fail";
@@ -300,8 +348,12 @@ class Main{
         RTree r6B = new RTree(new Point(2,1), 3, 3, 1, 3, false);
         RTree r7B = new RTree(new Point(7,1), 4, 3, 1, 3, false);
         
-        RTree[] hijos6B = {r2B, r3B, null};
-        RTree[] hijos7B = {r4B, r5B, null};
+        List<RTree> hijos6B = new ArrayList<RTree>();
+        hijos6B.add(r2B);
+        hijos6B.add(r3B);
+        List<RTree> hijos7B = new ArrayList<RTree>();
+        hijos6B.add(r4B);
+        hijos6B.add(r5B);
         
         r6B.setHijos(hijos6B, 2);
         r7B.setHijos(hijos7B, 2);
@@ -310,7 +362,7 @@ class Main{
         
         RTree r8B = new RTree(new Point(9,2), 4, 1, 1, 3, true);
         
-        String inserta1B = r1B.insertar(r8B);
+        List<RTree> inserta1B = r1B.insertar(r8B);
         
         RTree rTest1True = new RTree(new Point(6,1), 2, 5, 1, 3, true);
         RTree rTest2True = new RTree(new Point(5,4), 2, 2, 1, 3, true);
@@ -360,16 +412,16 @@ class RTree{
     private int alto, ancho;
     private int cant_hijos, min_hijos, max_hijos;
     private boolean es_hoja; //tipo = True -> Hoja, tipo = False -> MBR;
-    private RTree[] hijos;
+    private List<RTree> hijos;
     
     public RTree(int max_hijos, RTree r1, RTree r2){
         this.cant_hijos = 2;
         this.min_hijos = 2;
         this.max_hijos = max_hijos;
         this.es_hoja = false;
-        this.hijos = new RTree[max_hijos];
-        this.hijos[0] = r1;
-        this.hijos[1] = r2;
+        this.hijos = new ArrayList<RTree>();
+        this.hijos.add(r1);
+        this.hijos.add(r2);
     }
     
     public RTree(Point p, int alto, int ancho, int min_hijos, int max_hijos, boolean es_hoja){
@@ -380,9 +432,8 @@ class RTree{
         this.min_hijos = min_hijos;
         this.max_hijos = max_hijos;
         this.es_hoja = es_hoja;
-        this.hijos = new RTree[max_hijos];
+        this.hijos = new ArrayList<RTree>();
     }
-    
     
     public RTree(RTree r){
         this.base = r.getBase();
@@ -392,8 +443,8 @@ class RTree{
         this.min_hijos = r.getMinHijos();
         this.max_hijos = r.getMaxHijos();
         this.es_hoja = false;
-        this.hijos = new RTree[this.max_hijos];
-        this.hijos[0] = r;
+        this.hijos = new ArrayList<RTree>();
+        this.hijos.add(r);
     }
     
     public RTree rectanguloNuevo(RTree rtree){
@@ -492,28 +543,27 @@ class RTree{
         return this.max_hijos;
     }
     
-    public RTree[] getHijos(){
+    public List<RTree> getHijos(){
         return this.hijos;
     }
     
     public boolean addHijo(RTree hijo){
         if(this.cant_hijos < this.max_hijos){
-            this.hijos[this.cant_hijos] = hijo;
+            this.hijos.add(hijo);
             this.cant_hijos++;
             return true;
         }
         return false;
     }
     
-    public void setHijos(RTree[] hijos, int cant_hijos){
+    public void setHijos(List<RTree> hijos, int cant_hijos){
         this.hijos = hijos;
         this.cant_hijos = cant_hijos;
     }
     
-    
     public List<RTree> buscar(RTree rtree){
         List<RTree> encontrados = new ArrayList<RTree>();
-        if(this.hijos[0].es_hoja){ //todos son hojas
+        if(this.hijos.get(0).es_hoja){ //todos son hojas
             for(RTree hijo : this.hijos){
                 if(hijo == null)
                     break;
@@ -534,19 +584,21 @@ class RTree{
         }
     }
     
-    public String insertar(RTree rtree){
-        if(this.hijos[0].es_hoja){ //todos son hojas
+    public List<RTree> insertar(RTree rtree){
+        if(this.hijos.get(0).es_hoja){ //todos son hojas
             System.out.println("tengo hijos");
             if(this.cant_hijos < this.max_hijos){
-                this.hijos[this.cant_hijos] = rtree;
+                this.hijos.add(rtree);
                 this.cant_hijos++;
                 System.out.println("AHORA SI INSERTO");
-                return "INSERTE";
+                List<RTree> yo = new ArrayList<RTree>();
+                yo.add(this);
+                return yo;
             }
             else{
                 System.out.println("AHORA SI OVERFLOW");
                 //insertar, ojo con el maximo -> mejor trabajar con arraylist.
-                return "OVERFLOW"; //TODO OVERFLOW
+                return this.linear_split(); //TODO OVERFLOW
                 
             }
         }
@@ -584,53 +636,81 @@ class RTree{
             for (int min : index_min){
                 if (min_area == -1){
                     index_min_areas.add(min);
-                    min_area = this.hijos[min].areaActual();
+                    min_area = this.hijos.get(min).areaActual();
                 }
                 else{
-                    if(min_area == this.hijos[min].areaActual()){
+                    if(min_area == this.hijos.get(min).areaActual()){
                         index_min_areas.add(min);
                     }
-                    else if(this.hijos[min].areaActual() < min_area){
+                    else if(this.hijos.get(min).areaActual() < min_area){
                         index_min_areas = new ArrayList<Integer>();
-                        min_area = this.hijos[min].areaActual();
+                        min_area = this.hijos.get(min).areaActual();
                         index_min_areas.add(min);
                     }
                 }
             }
-            
+            double indice_d_random = Math.floor(Math.random() * index_min_areas.size());
+            int indice_random = (int)indice_d_random;
             if(index_min_areas.size() > 1){
-                double indice_d_random = Math.floor(Math.random() * index_min_areas.size());
-                int indice_random = (int)indice_d_random;
-                System.out.println("RANDOM en " + indice_random);
-                RTree hijo_aux =  this.hijos[index_min_areas.get(indice_random)];
+                
+                //System.out.println("RANDOM en " + indice_random);
+                RTree hijo_aux =  this.hijos.get(index_min_areas.get(indice_random));
                 RTree rtree_aux = hijo_aux.rectanguloNuevo(rtree);
                 
                 //Cambio el rectangulo nodo
-                this.hijos[index_min_areas.get(indice_random)].setBase(rtree_aux.getBase());
-                this.hijos[index_min_areas.get(indice_random)].setAlto(rtree_aux.getAlto());
-                this.hijos[index_min_areas.get(indice_random)].setAncho(rtree_aux.getAncho());
+                this.hijos.get(index_min_areas.get(indice_random)).setBase(rtree_aux.getBase());
+                this.hijos.get(index_min_areas.get(indice_random)).setAlto(rtree_aux.getAlto());
+                this.hijos.get(index_min_areas.get(indice_random)).setAncho(rtree_aux.getAncho());
                 
                 
-                return this.hijos[index_min_areas.get(indice_random)].insertar(rtree);
+                List<RTree> hijos = this.hijos.get(index_min_areas.get(indice_random)).insertar(rtree);
+                if(hijos.size()>1){
+                    this.hijos.set(index_min_areas.get(indice_random), hijos.get(0));
+                    this.hijos.add(hijos.get(1));
+                    this.cant_hijos++;
+                    if(this.cant_hijos>this.max_hijos){
+                        return this.linear_split();
+                    }
+                }
+                else{
+                    this.hijos.set(index_min_areas.get(indice_random), hijos.get(0));
+                }
+                List<RTree> yo = new ArrayList<RTree>();
+                yo.add(this);
+                return yo;
             }
             else{
-                System.out.println("Seleccionando " + index_min_areas.get(0));
+                //System.out.println("Seleccionando " + index_min_areas.get(0));
                 
-                RTree hijo_aux =  this.hijos[index_min_areas.get(0)];
+                RTree hijo_aux =  this.hijos.get(index_min_areas.get(0));
                 RTree rtree_aux = hijo_aux.rectanguloNuevo(rtree);
                 
                 //Cambio el rectangulo nodo
-                this.hijos[index_min_areas.get(0)].setBase(rtree_aux.getBase());
-                this.hijos[index_min_areas.get(0)].setAlto(rtree_aux.getAlto());
-                this.hijos[index_min_areas.get(0)].setAncho(rtree_aux.getAncho());
+                this.hijos.get(index_min_areas.get(0)).setBase(rtree_aux.getBase());
+                this.hijos.get(index_min_areas.get(0)).setAlto(rtree_aux.getAlto());
+                this.hijos.get(index_min_areas.get(0)).setAncho(rtree_aux.getAncho());
                 
-                return this.hijos[index_min_areas.get(0)].insertar(rtree);
+                
+                List<RTree> hijos = this.hijos.get(index_min_areas.get(indice_random)).insertar(rtree);
+                if(hijos.size()>1){
+                    this.hijos.set(index_min_areas.get(indice_random), hijos.get(0));
+                    this.hijos.add(hijos.get(1));
+                    this.cant_hijos++;
+                    if(this.cant_hijos>this.max_hijos){
+                        return this.linear_split();
+                    }
+                }
+                else{
+                    this.hijos.set(index_min_areas.get(indice_random), hijos.get(0));
+                }
+                List<RTree> yo = new ArrayList<RTree>();
+                yo.add(this);
+                return yo;
                 
             }
         }
         
     }
-    
     
     public boolean compareTo(RTree rtree){
         int x1 = this.base.x;
@@ -640,7 +720,7 @@ class RTree{
         int min1 = this.min_hijos;
         int max1 = this.max_hijos;
         boolean tipo1 = this.es_hoja;
-        RTree[] hijos1 = this.hijos;
+        List<RTree> hijos1 = this.hijos;
         
         int x2 = rtree.getBase().x;
         int y2 = rtree.getBase().y;
@@ -649,7 +729,7 @@ class RTree{
         int min2 = rtree.getMinHijos();
         int max2 = rtree.getMaxHijos();
         boolean tipo2 = rtree.isHoja();
-        RTree[] hijos2 = rtree.getHijos();
+        List<RTree> hijos2 = rtree.getHijos();                                                                                                                                                                                                                                                                                                                   
         
         if ( (x1 == x2) && (y1 == y2) && (ancho1 == ancho2) 
                 && (alto1 == alto2) && (min1 == min2) && (max1 == max2)
@@ -662,11 +742,10 @@ class RTree{
     
     public String toString(){
         String hijos = "";
-        
-        for( int i = 0; i < this.hijos.length; i++){
-            if(this.hijos[i] == null)
-                break;
-            hijos += "H["+i+"] = "+this.hijos[i].getBase();
+        int i =0;
+        for(RTree r : this.hijos){
+            hijos += "H["+i+"] = " + r.getBase();
+            i++;
         }
         
         return "Punto: ("+this.base.x+","+this.base.y+")\n"+" ancho: "+this.ancho
@@ -675,16 +754,80 @@ class RTree{
     }
     
     public boolean seIntersectaCon(RTree rtree){
-        RTree[] rts = menorEnY(this, rtree);
-        Point p1 = rts[0].getBase();
-        Point p2 = rts[1].getBase();
-        int alto1 = rts[0].getAlto();
-        int ancho1 = rts[0].getAncho();
-        int ancho2 = rts[1].getAncho();
+        List<RTree> rts = menorEnY(this, rtree);
+        Point p1 = rts.get(0).getBase();
+        Point p2 = rts.get(1).getBase();
+        int alto1 = rts.get(0).getAlto();
+        int ancho1 = rts.get(0).getAncho();
+        int ancho2 = rts.get(1).getAncho();
         if((p1.x <= p2.x && p1.x+ancho1 >= p2.x && p1.y + alto1 >= p2.y) || (p1.x >= p2.x && p1.x <= ancho2 + p2.x && p1.y + alto1 >= p2.y)){
             return true;
         }
         return false;
+    }
+    
+    public List<RTree> quadratic_split(){
+        RTree min1_MBR = this.hijos.get(0);
+        RTree min2_MBR = this.hijos.get(1);
+        int area_libre = min1_MBR.rectanguloNuevo(min2_MBR).areaActual() - min1_MBR.areaActual() - min2_MBR.areaActual();
+        int indice_hijo1 = 0;
+        int indice_hijo2 = 1;
+        for (int i = 1; i < this.cant_hijos-1; i++){
+            RTree primero_MBR = this.hijos.get(i);
+            for (int j = i+1; j < this.cant_hijos; j++){
+                RTree segundo_MBR = this.hijos.get(j);
+                int area_libre_calculada = primero_MBR.rectanguloNuevo(segundo_MBR).areaActual() - primero_MBR.areaActual() - segundo_MBR.areaActual();
+                if(area_libre_calculada > area_libre){
+                    min1_MBR = primero_MBR;
+                    min1_MBR = segundo_MBR;
+                    area_libre = area_libre_calculada;
+                    indice_hijo1 = i;
+                    indice_hijo2 = j;
+                }
+            }
+        }
+        
+        List<Integer> mbrs_elegidos = new ArrayList<Integer>();
+        mbrs_elegidos.add(indice_hijo1);
+        mbrs_elegidos.add(indice_hijo2);
+        List<Integer> hijos_que_quedan = new ArrayList<Integer>();
+        for (int i = 0; i < this.cant_hijos; i++){
+            hijos_que_quedan.add(i);
+        }
+        hijos_que_quedan.remove(mbrs_elegidos.get(0));
+        hijos_que_quedan.remove(mbrs_elegidos.get(1));
+        //TODO hacer test Integer o int
+        long seed = System.nanoTime();
+        Collections.shuffle(hijos_que_quedan, new Random(seed));
+        //test de si entrega otro o lo hace en el mismo
+        
+        RTree rtree1 = this.hijos.get(mbrs_elegidos.get(0).intValue());
+        RTree rtree2 = this.hijos.get(mbrs_elegidos.get(1).intValue());
+        
+        RTree r1nuevo = new RTree(rtree1);
+        RTree r2nuevo = new RTree(rtree2);
+        
+        for(int i = 0; i < hijos_que_quedan.size(); i++){
+            if( r1nuevo.rectanguloNuevo(this.hijos.get(hijos_que_quedan.get(i))).areaActual() 
+                > r2nuevo.rectanguloNuevo(this.hijos.get(hijos_que_quedan.get(i))).areaActual() ){
+                    if(r1nuevo.getCantidadHijos() < r1nuevo.max_hijos + 1 - r1nuevo.min_hijos){
+                        r1nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
+                    }else{
+                        r2nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
+                    }
+                }else{
+                    if(r2nuevo.getCantidadHijos() < r2nuevo.max_hijos + 1 - r2nuevo.min_hijos){
+                        r2nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
+                    }else{
+                        r1nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
+                    }
+                }
+        }
+        List<RTree> retorno = new ArrayList<RTree>();
+        retorno.add(r1nuevo);
+        retorno.add(r2nuevo);
+        return retorno;
+        
     }
     
     public List<RTree> linear_split(){
@@ -701,25 +844,25 @@ class RTree{
         Collections.shuffle(hijos_que_quedan, new Random(seed));
         //test de si entrega otro o lo hace en el mismo
         
-        RTree rtree1 = this.hijos[lejanos.get(0).intValue()];
-        RTree rtree2 = this.hijos[lejanos.get(1).intValue()];
+        RTree rtree1 = this.hijos.get(lejanos.get(0).intValue());
+        RTree rtree2 = this.hijos.get(lejanos.get(1).intValue());
         
         RTree r1nuevo = new RTree(rtree1);
         RTree r2nuevo = new RTree(rtree2);
         
         for(int i = 0; i < hijos_que_quedan.size(); i++){
-            if( r1nuevo.rectanguloNuevo(this.hijos[hijos_que_quedan.get(i)]).areaActual() 
-                > r2nuevo.rectanguloNuevo(this.hijos[hijos_que_quedan.get(i)]).areaActual() ){
+            if( r1nuevo.rectanguloNuevo(this.hijos.get(hijos_que_quedan.get(i))).areaActual() 
+                > r2nuevo.rectanguloNuevo(this.hijos.get(hijos_que_quedan.get(i))).areaActual() ){
                     if(r1nuevo.getCantidadHijos() < r1nuevo.max_hijos + 1 - r1nuevo.min_hijos){
-                        r1nuevo.insertar(this.hijos[hijos_que_quedan.get(i)]);
+                        r1nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
                     }else{
-                        r2nuevo.insertar(this.hijos[hijos_que_quedan.get(i)]);
+                        r2nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
                     }
                 }else{
                     if(r2nuevo.getCantidadHijos() < r2nuevo.max_hijos + 1 - r2nuevo.min_hijos){
-                        r2nuevo.insertar(this.hijos[hijos_que_quedan.get(i)]);
+                        r2nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
                     }else{
-                        r1nuevo.insertar(this.hijos[hijos_que_quedan.get(i)]);
+                        r1nuevo.insertar(this.hijos.get(hijos_que_quedan.get(i)));
                     }
                 }
         }
@@ -793,15 +936,18 @@ class RTree{
         }
     }
     
-    public static RTree[] menorEnY(RTree rtree1, RTree rtree2){
+    public static List<RTree> menorEnY(RTree rtree1, RTree rtree2){
         Point base1 = rtree1.getBase();
         Point base2 = rtree2.getBase();
+        List<RTree> rs = new ArrayList<RTree>();
         if (base1.y <= base2.y){
-            RTree[] rs = {rtree1, rtree2};
+            rs.add(rtree2);
+            rs.add(rtree1);
             return rs;
         }
         else{
-            RTree[] rs = {rtree2, rtree1};
+            rs.add(rtree2);
+            rs.add(rtree1);
             return rs;
         }
     }
